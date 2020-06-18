@@ -1,0 +1,22 @@
+{
+  "name": "pg-server",
+  "version": "1.0.0",
+  "description": "Power Gym server",
+  "main": "src/index.ts",
+  "author": "David Gaspar (davidgaspar.dev@gmail.com)",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production ts-node src",
+    "dev": "NODE_ENV=development nodemon --watch 'src/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/mongodb": "^3.5.22",
+    "@types/node": "^13.13.5",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.5.9",
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
+  }
+}
