@@ -54,6 +54,7 @@ export default class Routes {
 
                     case "/foods":
 
+                        // Service 
                         const service = new FoodService();
 
                         service.getFoods().then((data: any) => onReponse(200, undefined, data));
@@ -86,7 +87,6 @@ export default class Routes {
                             const service = new FoodService();
 
                             const { status, message}: ResponseContent = await service.addFood(JSON.parse(body.toString()));
-                            console.log("message:", message)
 
                             onReponse(status, origin as string, Buffer.from(JSON.stringify(message), "utf-8"));
                         });
@@ -95,7 +95,7 @@ export default class Routes {
 
 
                     /**
-                     *  
+                     *  Subscribe hoppy
                      */    
                     case "/subscribe/hoopy":
 

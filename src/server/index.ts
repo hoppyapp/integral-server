@@ -15,10 +15,6 @@ export default class Server extends Routes {
         // Destructuring assignment
         const { requestListener }: Server = this;
 
-        // Bind methods
-        // this.requestListener = this.requestListener.bind(this);
-        // this.originAllowed = this.originAllowed.bind(this);
-
         // Creating server
         this.engine = http.createServer(requestListener);
     }
@@ -48,8 +44,6 @@ export default class Server extends Routes {
 
         // Main request
         else super.binding(request, (statusCode: number, origin?: string, body?: any) => {
-
-            console.log(body);
 
             if(typeof body === "object") body = Buffer.from(JSON.stringify(body));
             else body = Buffer.from(body);
