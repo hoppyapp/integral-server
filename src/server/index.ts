@@ -29,8 +29,19 @@ export default class Server extends Routes {
      */
     private requestListener(request: IncomingMessage, response: ServerResponse): void {
         
-        // Preflight
-        if(request.method === METHOD_OPTIONS) super.preflight(request, (statusCode: number, origin?: string) => {
+        // Preflight (cors)
+        if(request.method === METHOD_OPTIONS) super.preflight(request, (statusCode: number, origin?: string | string[]) => {
+
+            if(Array.isArray(origin)) {
+                let newOrigin = "";
+
+                origin.forEach((originCurrent, index) => {
+                    if(index > 0) newOrigin += `,${originCurrent}`;
+                    else newOrigin += originCurrent;
+                });
+
+                origin = newOrigin;
+            }
             
             // Write head from response
             response.writeHead(statusCode, {
@@ -43,7 +54,18 @@ export default class Server extends Routes {
         });
 
         // Main request
-        else super.binding(request, (statusCode: number, origin?: string, body?: any) => {
+        else super.binding(request, (statusCode: number, origin?: string | string[], body?: any) => {
+
+            if(Array.isArray(origin)) {
+                let newOrigin = "";
+
+                origin.forEach((originCurrent, index) => {
+                    if(index > 0) newOrigin += `,${originCurrent}`;
+                    else newOrigin += originCurrent;
+                });
+
+                origin = newOrigin;
+            }
 
             if(typeof body === "object") body = Buffer.from(JSON.stringify(body));
             else body = Buffer.from(body);
@@ -64,7 +86,8 @@ export default class Server extends Routes {
     /**
      * Run 
      * 
-     * Start server
+     * @description Start server
+     * @param {() => void | undefined} callback
      */
     public run(callback?: () => void): void {
         const { engine }: Server = this;
