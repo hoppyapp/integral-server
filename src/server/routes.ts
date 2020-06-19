@@ -1,7 +1,7 @@
 import { IncomingMessage, IncomingHttpHeaders } from "http";
 import { OnResponse, Client, ResponseContent } from "../helpers/utils/types";
 import { getQueryFromURL, getPathFromURL } from "../helpers/tools/format";
-import { METHOD_POST, METHOD_GET } from "../helpers/contants";
+import { METHOD_POST, METHOD_GET, FOOD_CATEGORIES } from "../helpers/contants";
 import MundiPagg from "../services/mundipagg";
 import fs from "fs";
 import FoodService from "../services/food";
@@ -35,7 +35,7 @@ export default class Routes {
         const { method, url, headers }: IncomingMessage = request;
         const { origin }: IncomingHttpHeaders = request.headers;
 
-        console.log(request.headers["content-length"]);
+        // console.log(request.headers["content-length"]);
 
         if(!url) {
             request.connection.destroy();
@@ -57,7 +57,18 @@ export default class Routes {
                         // Service 
                         const service = new FoodService();
 
-                        service.getFoods().then((data: any) => onReponse(200, undefined, data));
+                        service.getFoods().then((data: any) => onReponse(200, origin, data));
+
+                    break;
+
+                    /**
+                     *  Get categories food
+                     */
+                    case "/foods/categories":
+
+                        onReponse(200, origin, {
+                            categories: FOOD_CATEGORIES
+                        });
 
                     break;
 
@@ -133,8 +144,6 @@ export default class Routes {
      */
     private static originAllowed(requestOrigin: string): boolean {
         const origins: string[] = process.env.SERVER_ORIGINS_ALLOW?.split(",") || [];
-
-        console.log(origins);
 
         for(let origin of origins) if(origin === requestOrigin) return true;
 
