@@ -1,11 +1,16 @@
+import { OptionalId } from "mongodb";
 
-export type OnResponse = (statusCode: number, origin?: string, body?: Buffer) => void;
+export type OnResponse = (statusCode: number, origin?: string | string[], body?: any) => void;
 
-export type ResponseContent = {
+export type ResponseData = {
     status: number;
-    message: {
+    content: {
         name: string;
         description: any;
+    } | {
+        name: string;
+        data: any;
+        count?: number;
     }
 } 
 
@@ -17,6 +22,7 @@ export type ResponseContent = {
 export type Schema = {
     bsonType: string;
     required: string[];
+    additionalProperties: boolean;
     properties: any;
 }
 

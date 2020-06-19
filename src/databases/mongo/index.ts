@@ -1,4 +1,4 @@
-import { MongoClient, Db, CommandCursor, Cursor } from "mongodb";
+import { MongoClient, Db, CommandCursor, Cursor, FilterQuery, OptionalId } from "mongodb";
 import foodsSchema from "./schemas/foods";
 import { Schema } from "../../helpers/utils/types";
 
@@ -20,6 +20,7 @@ export default class Mongo {
         this.run = this.run.bind(this);
         this.createData = this.createData.bind(this);
         this.readAllData = this.readAllData.bind(this);
+        this.getCount = this.getCount.bind(this);
     }
 
     private async run() {
@@ -45,15 +46,15 @@ export default class Mongo {
      * 
      * @param {T} data 
      */
-    protected async createData<T>(data: T): Promise<void> {
+    protected async createData<T>(data: OptionalId<T>): Promise<void> {
         // Destructuring assignment
         const { engine, run, collection }: Mongo = this;
 
         // Check if exits engine
         if(!engine) await run();
-
+    
         // @ts-ignore
-        await this.engine.collection(collection).insertOne(data);
+        await this.engine.collection<T>(collection).insertOne(data);
     }
 
     /**
@@ -69,9 +70,33 @@ export default class Mongo {
         if(!engine) await run();
 
         // @ts-ignore
-        const cursor: Cursor<T> = this.engine.collection(collection).find<T>();
+        const data: T[] = await this.engine.collection(collection).find<T>().toArray();
 
-        return cursor.map<T>((data: T) => data).toArray();
+        return data;
+    }
+
+    protected async getCount(): Promise<number> {
+        // Destructuring assigment
+        const { engine, run, collection }: Mongo = this;
+
+        // Check if exists engine 
+        if(!engine) await run();
+
+        // @ts-ignore
+        return await this.engine.collection(collection).count();
+    }
+
+    protected async alreadyExists<T>(filter: FilterQuery<T>): Promise<boolean> {
+        // Destructuring assignment
+        const { engine, run, collection }: Mongo = this;
+
+        // Chack if exists engine
+        if(!engine) await run();
+
+        // @ts-ignore
+        const data: T | null = await this.engine.collection(collection).findOne<T>(filter);
+
+        return data ? true : false;
     }
 
 

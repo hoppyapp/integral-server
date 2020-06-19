@@ -9,7 +9,10 @@ import { FOOD_CATEGORIES } from "../../../helpers/contants";
 const schema: Schema = {
     bsonType: "object",
     required: [ "name", "portion", "composition", "calories", "category" ],
+    additionalProperties: false,
     properties: {
+
+        _id: {},
 
         // Food name
         name: {

@@ -1,5 +1,5 @@
 import { IncomingMessage, IncomingHttpHeaders } from "http";
-import { OnResponse, Client, ResponseContent } from "../helpers/utils/types";
+import { OnResponse, Client, ResponseData } from "../helpers/utils/types";
 import { getQueryFromURL, getPathFromURL } from "../helpers/tools/format";
 import { METHOD_POST, METHOD_GET, FOOD_CATEGORIES } from "../helpers/contants";
 import MundiPagg from "../services/mundipagg";
@@ -97,9 +97,9 @@ export default class Routes {
 
                             const service = new FoodService();
 
-                            const { status, message}: ResponseContent = await service.addFood(JSON.parse(body.toString()));
+                            const { status, content }: ResponseData = await service.addFood(JSON.parse(body.toString()));
 
-                            onReponse(status, origin as string, Buffer.from(JSON.stringify(message), "utf-8"));
+                            onReponse(status, origin as string, Buffer.from(JSON.stringify(content), "utf-8"));
                         });
 
                         break;
