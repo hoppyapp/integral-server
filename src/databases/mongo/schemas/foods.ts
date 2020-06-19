@@ -14,7 +14,7 @@ const schema: Schema = {
         name: {
             bsonType: "string",
             minLength: 4,
-            maxLength: 40,
+            maxLength: 60,
             description: "Name field"
         },
 
