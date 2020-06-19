@@ -19,9 +19,7 @@ export default class FoodService extends Mongo {
      * @param {Food} data 
      */
     public async addFood(data: Food): Promise<ResponseContent> {
-
-        console.info("[ FOOD SERVICE ] Try add:", data);
-
+        
         try {
             // Create food in database
             await super.createData(data);
