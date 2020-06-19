@@ -1,4 +1,5 @@
 import { Schema } from "../../../helpers/utils/types";
+import { FOOD_CATEGORIES } from "../../../helpers/contants";
 
 /**
  * Food Schema
@@ -71,7 +72,7 @@ const schema: Schema = {
 
         // Food category
         category: {
-            enum: [ "Bebidas", "Carnes e Protéinas", "Cereais e Tubérculos", "Dia do Lixo", "Frutas e Derivados", "Legumes e Verduras", "Leguminosos", "Leites e Derivados", "Oleaginosas", "Óleos e Gorduras", "Pães e Sementes" ]
+            enum: FOOD_CATEGORIES
         }
     }
 }
