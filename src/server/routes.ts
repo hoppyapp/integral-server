@@ -107,7 +107,7 @@ export default class Routes {
 
                         request.addListener("end", async () => {
 
-                            console.log(body);
+                            console.log("[ CLIENT | MUNDIPAGG ]:", body);
 
                             const service: MundiPagg = new MundiPagg(JSON.parse(body.toString()) as Client);
 
