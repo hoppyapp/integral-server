@@ -50,18 +50,22 @@ const schema: Schema = {
             properties: {
                 proteins: {
                     bsonType: [ "double", "int" ],
+                    minimum: 0,
                     description: "Proteins field"
                 },
                 carbs: {
                     bsonType: [ "double", "int" ],
+                    minimum: 0,
                     description: "Carbs field"
                 },
                 lipids: {
                     bsonType: [ "double", "int" ],
+                    minimum: 0,
                     description: "Lipids field"
                 },
                 fibers: {
                     bsonType: [ "double", "int" ],
+                    minimum: 0,
                     description: "Fibers field"
                 }
             }
@@ -70,6 +74,7 @@ const schema: Schema = {
         // Food calories
         calories: {
             bsonType: [ "double", "int" ],
+            minimum: 0,
             description: "Calories field"
         },
 
