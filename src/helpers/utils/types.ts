@@ -27,6 +27,18 @@ export type Schema = {
 }
 
 /**
+ * Admin
+ * 
+ * @type {Admin}
+ */
+export type Admin = {
+    username: string;
+    fullname: string;
+    email: string;
+    company: string;
+}
+
+/**
  * Food
  * 
  * @type {Food}
