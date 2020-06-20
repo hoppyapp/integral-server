@@ -39,8 +39,11 @@ export default class FoodService extends Mongo {
 
         } catch(e) {
 
-            console.log(FoodService.LOG_TAG, `Data: ${data}`);
+            // Log
+            console.log("------------------------------------");
+            console.log(FoodService.LOG_TAG, data);
             console.log(FoodService.LOG_TAG, `${e}`);
+            console.log("------------------------------------");
 
             // Return error
             return {
