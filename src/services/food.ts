@@ -11,8 +11,17 @@ export default class FoodService extends Mongo {
 
     private static readonly LOG_TAG: string = "[ FOOD SERVICE ]";
 
+
+    private static readonly DATABASE_NAME: string = "integral";
+    private static readonly COLLECTION_NAME: string = "foods";
+
+    /**
+     * Food Service
+     * 
+     * @constructor
+     */
     constructor() {
-        super("integral", "foods", foodsSchema);
+        super(FoodService.DATABASE_NAME, FoodService.COLLECTION_NAME, foodsSchema);
     }
 
     /**
@@ -84,8 +93,6 @@ export default class FoodService extends Mongo {
                     description: e.message
                 }
             }
-
         }
     }
-
 }
