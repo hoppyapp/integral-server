@@ -11,6 +11,15 @@ import FoodService from "../services/food";
  */
 export default class Routes {
 
+    /**
+     * Preflight
+     * 
+     * @description A CORS preflight request is a CORS request that checks to see 
+     *  if the CORS protocol is understood and a server is aware using specific methods
+     *  and headers.
+     * @param {IncomingMessage} request CORS preflight request 
+     * @param {OnResponse} onReponse callback to response request
+     */
     protected preflight(request: IncomingMessage, onReponse: OnResponse): void {
         // Destructuring assignment
         const { origin } = request.headers;

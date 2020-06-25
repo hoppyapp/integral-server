@@ -4,11 +4,18 @@ import { METHOD_OPTIONS } from "../helpers/contants";
 
 /**
  * Server
+ * 
+ * @extends {Route}
  */
 export default class Server extends Routes {
 
     private readonly engine: http.Server;
 
+    /**
+     * Server 
+     * 
+     * @constructor
+     */
     constructor() {
         super();
 
@@ -22,8 +29,7 @@ export default class Server extends Routes {
     /**
      * Request Listener
      * 
-     * Pointer start from all request to this server
-     * 
+     * @description Pointer start from all request to this server
      * @param {IncomingMessage} request 
      * @param {ServerResponse} response 
      */
