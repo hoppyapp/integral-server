@@ -58,6 +58,24 @@ export default class Mongo {
     }
 
     /**
+     * Read data 
+     * 
+     * @param page 
+     */
+    protected async readOneData<T>(filter: FilterQuery<T>): Promise<T | null> {
+        // Destructuring assignment
+        const { engine, run, collection }: Mongo = this;
+
+        // Check if exists
+        if(!engine) await run();
+
+        // @ts-ignore
+        const data: T | null = await this.engine.collection(collection).findOne<T>(filter);
+
+        return data;
+    }
+
+    /**
      * Read All Data
      * 
      * @param {T[]} page 
