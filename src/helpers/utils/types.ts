@@ -39,6 +39,29 @@ export type Admin = {
 }
 
 /**
+ * User 
+ * 
+ * @type {User}
+ */
+export type User = {
+    name: string;
+    email: string;
+    platform: string;
+    measures: Measure[];
+}
+
+/**
+ * Measure
+ * 
+ * @type {Measure}
+ */
+type Measure = {
+    weight: number;
+    height: number;
+    date: Date;
+}
+
+/**
  * Food
  * 
  * @type {Food}
