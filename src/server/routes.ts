@@ -5,6 +5,7 @@ import { METHOD_POST, METHOD_GET, FOOD_CATEGORIES } from "../helpers/contants";
 import MundiPagg from "../services/mundipagg";
 import fs from "fs";
 import FoodService from "../services/food";
+import UserService from "../services/user";
 
 /**
  * Routes
@@ -90,6 +91,25 @@ export default class Routes {
                 let body: Buffer = Buffer.from("", "utf-8");
 
                 switch(path) {
+
+                    case "/user/register":
+
+                        request.addListener("data", (chunk: Buffer) => {
+                            if(chunk.length > 1e6) request.connection.destroy();
+
+                            body = Buffer.concat([ body, chunk ]);
+                        });
+
+                        request.addListener("end", async () => {
+
+                            const service = new UserService();
+
+                            const { status, content }: ResponseData = await service.register(JSON.parse(body.toString()));
+
+                            onReponse(status, origin as string, Buffer.from(JSON.stringify(content), "utf-8"));
+                        });
+
+                    break;
 
                     /**
                      * Add food to database
