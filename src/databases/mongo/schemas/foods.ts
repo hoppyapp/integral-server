@@ -12,7 +12,9 @@ const schema: Schema = {
     additionalProperties: false,
     properties: {
 
-        _id: {},
+        _id: {
+            bsonType: "objectId"
+        },
 
         // Food name
         name: {
