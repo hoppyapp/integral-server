@@ -55,7 +55,7 @@ export type User = {
  * 
  * @type {Measure}
  */
-type Measure = {
+export type Measure = {
     weight: number;
     height: number;
     date: {
