@@ -73,8 +73,10 @@ export default class Server extends Routes {
                 origin = newOrigin;
             }
 
-            if(typeof body === "object") body = Buffer.from(JSON.stringify(body));
-            else body = Buffer.from(body);
+            if(!Buffer.isBuffer(body)) {
+                if(typeof body === "object") body = Buffer.from(JSON.stringify(body));
+                else body = Buffer.from(body);
+            }
 
             // Write head froom response
             response.writeHead(statusCode, { 
