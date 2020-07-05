@@ -58,7 +58,11 @@ export type User = {
 type Measure = {
     weight: number;
     height: number;
-    date: Date;
+    date: {
+        day: number;
+        month: number;
+        year: number;
+    };
 }
 
 /**

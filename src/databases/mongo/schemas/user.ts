@@ -46,7 +46,25 @@ const schema: Schema = {
                 properties: {
 
                     date: {
-                        bsonType: "date"
+                        bsonType: "object",
+                        required: [ "day", "month", "year" ],
+                        additionalProperties: false,
+                        properties: {
+                            day: {
+                                bsonType: "int",
+                                minimum: 1,
+                                maximum: 31
+                            },
+                            month: {
+                                bsonType: "int",
+                                minimum: 1,
+                                maximum: 12
+                            },
+                            year: {
+                                bsonType: "int",
+                                minimum: 1970
+                            }
+                        }
                     },
 
                     weight: {
