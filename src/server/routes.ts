@@ -106,7 +106,7 @@ export default class Routes {
 
                             const { status, content }: ResponseData = await service.register(JSON.parse(body.toString()));
 
-                            onReponse(status, origin as string, Buffer.from(JSON.stringify(content), "utf-8"));
+                            onReponse(status, origin as string, content);
                         });
 
                     break;
@@ -128,7 +128,7 @@ export default class Routes {
 
                             const { status, content }: ResponseData = await service.addFood(JSON.parse(body.toString()));
 
-                            onReponse(status, origin as string, Buffer.from(JSON.stringify(content), "utf-8"));
+                            onReponse(status, origin as string, content);
                         });
 
                         break;
