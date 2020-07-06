@@ -114,6 +114,30 @@ export default class Routes {
 
                     break;
 
+                    case "/user/add/measures":
+
+                        if(typeof query.id === "string") {
+
+                            request.addListener("data", (chunk: Buffer) => {
+                                if(chunk.length > 1e6) request.connection.destroy();
+
+                                body = Buffer.concat([ body, chunk ]);                                
+                            });
+
+                            request.addListener("end", async () => {
+                                if(body.length > 10) {
+                                    const service = new UserService();
+
+                                    const { status, content }: ResponseData = await service.addMeasures(query.id, body);
+
+                                    onReponse(status, origin as string, content);
+                                }
+                            });
+
+                        }
+
+                    break;
+
                     /**
                      * Add food to database
                      */
