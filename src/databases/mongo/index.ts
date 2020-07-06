@@ -1,5 +1,4 @@
-import { MongoClient, Db, CommandCursor, Cursor, FilterQuery, OptionalId } from "mongodb";
-import foodsSchema from "./schemas/foods";
+import { MongoClient, Db, CommandCursor, FilterQuery, OptionalId, ObjectId } from "mongodb";
 import { Schema } from "../../helpers/utils/types";
 
 /**
@@ -91,6 +90,17 @@ export default class Mongo {
         const data: T[] = await this.engine.collection(collection).find<T>().toArray();
 
         return data;
+    }
+
+    protected async updateOneData<T>(id: ObjectId, data: any): Promise<void> {
+        // Destructuring assignment
+        const { engine, run, collection }: Mongo = this;
+
+        // Chack if exists engine
+        if(engine) await run();
+
+        // @ts-ignore
+        await this.engine.collection(collection).updateOne({ _id: id }, data);
     }
 
     protected async getCount(): Promise<number> {
