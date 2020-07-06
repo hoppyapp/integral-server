@@ -92,6 +92,9 @@ export default class Routes {
 
                 switch(path) {
 
+                    /**
+                     * Register user
+                     */
                     case "/user/register":
 
                         request.addListener("data", (chunk: Buffer) => {
