@@ -88,7 +88,22 @@ export default class Routes {
 
             case METHOD_POST:
 
-                let body: Buffer = Buffer.from("", "utf-8");
+                function getBody(request: IncomingMessage, onBody: (body: Buffer) => Promise<void>): void {
+
+                    let body: Buffer = Buffer.from("", "utf-8");
+            
+                    request.addListener("data", (chunk: Buffer) => {
+                        if(chunk.length > 1e6) request.connection.destroy();
+            
+                        body = Buffer.concat([ body, chunk ]);
+                    });
+            
+                    request.addListener("end", () => {
+                        if(body.length > 0) {
+                            onBody(body);
+                        }
+                    })
+                }
 
                 switch(path) {
 
@@ -97,13 +112,7 @@ export default class Routes {
                      */
                     case "/user/register":
 
-                        request.addListener("data", (chunk: Buffer) => {
-                            if(chunk.length > 1e6) request.connection.destroy();
-
-                            body = Buffer.concat([ body, chunk ]);
-                        });
-
-                        request.addListener("end", async () => {
+                        getBody(request, async (body: Buffer) => {
 
                             const service = new UserService();
 
@@ -118,20 +127,13 @@ export default class Routes {
 
                         if(typeof query.id === "string") {
 
-                            request.addListener("data", (chunk: Buffer) => {
-                                if(chunk.length > 1e6) request.connection.destroy();
+                            getBody(request, async (body: Buffer) => {
 
-                                body = Buffer.concat([ body, chunk ]);                                
-                            });
+                                const service = new UserService();
 
-                            request.addListener("end", async () => {
-                                if(body.length > 10) {
-                                    const service = new UserService();
+                                const { status, content }: ResponseData = await service.addMeasures(query.id, body);
 
-                                    const { status, content }: ResponseData = await service.addMeasures(query.id, body);
-
-                                    onReponse(status, origin as string, content);
-                                }
+                                onReponse(status, origin as string, content);
                             });
 
                         }
@@ -143,14 +145,8 @@ export default class Routes {
                      */
                     case "/foods/add":
 
-                        request.addListener("data", (chunk: Buffer) => {
-                            if(chunk.length > 1e6) request.connection.destroy();
-
-                            body = Buffer.concat([ body, chunk ]);
-                        });
-
-                        request.addListener("end", async () => {
-
+                        getBody(request, async (body: Buffer) => {
+                            
                             const service = new FoodService();
 
                             const { status, content }: ResponseData = await service.addFood(JSON.parse(body.toString()));
@@ -168,14 +164,8 @@ export default class Routes {
 
                         if(!query.plan) break;
 
-                        request.addListener("data", (chunk: Buffer) => {
-                            body = Buffer.concat([ body, chunk ]);
-                        });
-
-                        request.addListener("end", async () => {
-
-                            console.log("[ CLIENT | MUNDIPAGG ]:", body);
-
+                        getBody(request, async (body: Buffer) => {
+                            
                             const service: MundiPagg = new MundiPagg(JSON.parse(body.toString()) as Client);
 
                             if(query.plan === "standard") await service.payStandardPlan();
