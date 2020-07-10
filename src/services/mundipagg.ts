@@ -6,6 +6,8 @@ import axios, { AxiosResponse } from "axios";
  */
 export default class MundiPagg {
 
+    private static readonly LOG_TAG: string = "[ SERVICE | MundiPagg ]:";
+
     // Client 
     private readonly client: Client;
 
@@ -17,6 +19,8 @@ export default class MundiPagg {
     private readonly secretKey: string = Buffer.from("sk_test_vQOyPg5HqHyeG1K4:").toString("base64");
 
     constructor(client: Client) {
+
+        console.log(`${MundiPagg.LOG_TAG} client - `, client);
 
         // Set client
         this.client = client;
@@ -58,8 +62,6 @@ export default class MundiPagg {
     public async payStandardPlan(): Promise<void> {
         // Destructuring assignment
         const { urlOrder, secretKey, client, existClient }: MundiPagg = this;
-
-        console.log(client.customer.address);
 
         // Body data
         let body: any = {
@@ -113,8 +115,6 @@ export default class MundiPagg {
                 email: client.customer.email                
             };
         }
-
-        console.log(body);
 
         try {
 
