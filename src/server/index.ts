@@ -102,6 +102,9 @@ export default class Server extends Routes {
 
         let port: number = Number(process.env.SERVER_PORT || 3040);
         let ip: string = process.env.SERVER_IP || "0.0.0.0";
+	
+	console.log("[ SERVER ] port:", port);
+	console.log("[ SERVER ] ip:", ip);
 
         engine.listen(port, ip, callback);
 
